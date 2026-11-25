@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- matchmaking.html: quick match, or make / join a room with a code. -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+  <title>GOMOKU</title>
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="matchmaking.css">
+</head>
+<body>
+
+  <div id="user-bar">
+    <span>&#128100; <strong id="user-name"></strong></span>
+    <button id="logout">Log out</button>
+  </div>
+
+  <main class="card">
+    <div class="logo"><span class="stone black"></span><span class="stone white"></span></div>
+    <h1>Five in a Row</h1>
+    <h2>Matchmaking</h2>
+    <p class="sub">Play the next free player, or make a room and share its code.</p>
+
+    <div class="row">
+      <button type="button" id="find" class="primary">Find a match</button>
+      <button type="button" id="create">Create a room</button>
+    </div>
+
+    <div class="row">
+      <input id="code" type="text" placeholder="Room code" maxlength="8" autocomplete="off" aria-label="Room code">
+      <button type="button" id="join">Join room</button>
+    </div>
+
+    <div class="row">
+      <button type="button" id="local" class="ghost">Play on this computer (2 players)</button>
+    </div>
+
+    <p id="note" class="note" role="alert"></p>
+  </main>
+
+  <script src="api.js"></script>
+  <script src="session.js"></script>
+  <script src="matchmaking.js"></script>
+</body>
+</html>

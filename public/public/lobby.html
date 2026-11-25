@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- lobby.html: wait for player 2. When both are here, game.html opens. -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+  <title>GOMOKU</title>
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="lobby.css">
+</head>
+<body>
+
+  <div id="user-bar">
+    <span>&#128100; <strong id="user-name"></strong></span>
+    <button id="logout">Log out</button>
+  </div>
+
+  <main class="card">
+    <h2>Lobby</h2>
+    <p class="sub">Room code: <strong id="room-code" class="room-code"></strong></p>
+
+    <div id="players" class="lobby-players"></div>
+    <p id="status" class="status" role="alert"></p>
+
+    <button type="button" id="leave" class="ghost">Leave</button>
+    <button type="button" id="start" class="primary" hidden>Start game</button>
+  </main>
+
+  <script src="api.js"></script>
+  <script src="session.js"></script>
+  <script src="lobby.js"></script>
+</body>
+</html>

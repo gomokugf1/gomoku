@@ -1,0 +1,443 @@
+
+/* Five in a Row styling */
+
+/* Smooth fade-in between switching pages (login, matchmaking, lobby, game). */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+body {
+  background: #2b2118;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+
+  animation: pageFadeIn 0.45s ease forwards;
+}
+
+h1 {
+  margin: 6px;
+}
+
+#message {
+  font-size: 22px;
+  margin: 6px;
+}
+
+/* 19x19 board */
+#board {
+  /* square, scales with the window: 90% of the width or 80% of the height, whichever is smaller
+     (minus the 2 x 6px border) */
+  --cell: calc((min(90vw, 80vh) - 12px) / 19);
+
+  position: relative;
+
+  display: grid;
+  grid-template-columns: repeat(19, var(--cell));
+  grid-template-rows: repeat(19, var(--cell));
+
+  margin: 10px auto;
+  width: fit-content;
+
+  background: #c99a5b;
+  border: 6px solid #8b5a2b;
+  border-radius: 6px;
+}
+
+/* Each cell is one intersection */
+.cell {
+  width: var(--cell);
+  height: var(--cell);
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Grid lines */
+.cell::before,
+.cell::after {
+  content: "";
+  position: absolute;
+  background: #5a3a1a;
+  pointer-events: none;
+}
+
+/* Horizontal line through center */
+.cell::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+/* Vertical line through center */
+.cell::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+/* Board edges */
+.cell.left::before {
+  left: 50%;
+}
+
+.cell.right::before {
+  right: 50%;
+}
+
+.cell.top::after {
+  top: 50%;
+}
+
+.cell.bottom::after {
+  bottom: 50%;
+}
+
+/* Stones centered on intersections (scoped to the board so logo stones
+   on the matchmaking/lobby pages don't inherit them) */
+#board .stone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 84%;
+  height: 84%;
+
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Black stone */
+#board .stone.black {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #777,
+    #000
+  );
+}
+
+/* White stone */
+#board .stone.white {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #fff,
+    #bbb
+  );
+}
+
+/* Last move dot */
+#board .stone.last::after {
+  content: "";
+  position: absolute;
+
+  top: 35%;
+  left: 35%;
+
+  width: 30%;
+  height: 30%;
+
+  border-radius: 50%;
+  background: red;
+}
+
+/* Winning stones */
+#board .stone.win {
+  box-shadow:
+    0 0 0 3px gold,
+    0 0 10px 4px gold;
+}
+
+/* Small logo stones (same look as the login page logo) */
+.logo {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 8px 0 14px;
+}
+
+.logo .stone {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.logo .stone.black {
+  background: radial-gradient(circle at 35% 30%, #777, #000);
+}
+
+.logo .stone.white {
+  background: radial-gradient(circle at 35% 30%, #fff, #bbb);
+}
+
+/* Hover dot: a single circle that follows the mouse over the board
+   (moved by JS with a smooth transition). */
+#hover-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 70%;
+  height: 70%;
+
+  border-radius: 50%;
+  background: rgba(255, 220, 120, 0.65);
+
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+
+  transition: left 0.12s ease, top 0.12s ease, opacity 0.15s ease;
+}
+
+/* Buttons */
+button {
+  font-size: 18px;
+  padding: 8px 20px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #e2a84b;
+  cursor: pointer;
+
+  /* Simple animations for the buttons */
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background: #f0b95b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+button:disabled {
+  cursor: default;
+}
+
+/* Turn indicator bar */
+#turn-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: fit-content;
+  min-width: 180px;
+
+  margin: 12px auto;
+  padding: 10px 20px;
+
+  /* stays visible while you scroll */
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+
+  background: #4a3828;
+  border: 2px solid #8b5a2b;
+  border-radius: 12px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Turn indicator stone */
+#turn-stone {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Black indicator */
+#turn-stone.black {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #777,
+    #000
+  );
+  box-shadow: 0 0 5px #000;
+}
+
+/* White indicator */
+#turn-stone.white {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #fff,
+    #bbb
+  );
+  box-shadow: 0 0 5px #000;
+}
+
+/* Turn text */
+#turn-text {
+  color: white;
+}
+
+/* Logged-in user bar (top right corner) */
+#user-bar {
+  position: fixed;
+  top: 8px;
+  right: 10px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 14px;
+}
+
+#user-bar button {
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+/* ---------- Shared styles for the Matchmaking / Lobby / Game pages ---------- */
+
+.card {
+  max-width: 560px;
+  margin: 10px auto;
+  padding: 16px 26px;
+  background: #2c1e15;
+  border: 2px solid #8b5a2b;
+  border-radius: 12px;
+  text-align: left;
+}
+
+h2 {
+  margin: 6px 0;
+  font-size: 22px;
+}
+
+h3 {
+  font-size: 17px;
+}
+
+.sub {
+  color: #cfc0a9;
+  font-size: 15px;
+  margin: 4px 0;
+}
+
+.row {
+  margin: 12px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+input {
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1px solid #8b5a2b;
+  border-radius: 8px;
+  background: #2b1d13;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #8a7a66;
+}
+
+.note {
+  color: #cfc0a9;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.note.error {
+  color: #f66;
+}
+
+.list {
+  margin: 8px 0;
+}
+
+.match-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  margin: 6px 0;
+  background: #3a2a1c;
+  border: 1px solid #5a3a1a;
+  border-radius: 8px;
+}
+
+.match-row button {
+  white-space: nowrap;
+}
+
+/* Lobby: both players shown, side by side */
+.lobby-players {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 14px 0;
+}
+
+.lobby-seat {
+  font-size: 18px;
+}
+
+.seat {
+  margin: 4px 0;
+  font-size: 17px;
+}
+
+.seat-me {
+  color: #f0b95b;
+}
+
+.status {
+  font-size: 16px;
+  color: #f0b95b;
+  margin: 10px 0;
+}
+
+.status.ok {
+  color: #7fe07f;
+}
+
+.restart-status {
+  min-height: 18px;
+  font-size: 15px;
+  margin: 6px 0;
+}
+
+/* Game page specifics */
+.players {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px auto;
+}
+
+.ghost {
+  background: #3a2a1c !important;
+}
+
+#leave {
+  margin-top: 12px;
+  background: #e2a84b;
+}

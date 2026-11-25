@@ -1,0 +1,21 @@
+/* game.css: online game page specifics (the board itself is styled in style.css) */
+
+#message {
+  font-size: 18px;
+  margin: 8px 0;
+  min-height: 24px;
+}
+
+#message.error {
+  color: #f66;
+}
+
+.row.center {
+  justify-content: center;
+}
+
+/* it is your turn: the bar lights up */
+#turn-bar.mine {
+  border-color: #f0b95b;
+  box-shadow: 0 0 12px rgba(240, 185, 91, 0.55);
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- game.html: the 19x19 match (game.html?match=<id>). The server decides every
+     move; this page only draws what the server says and sends clicks. -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+  <title>GOMOKU</title>
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+  <div id="user-bar">
+    <span>&#128100; <strong id="user-name"></strong></span>
+    <button id="logout">Log out</button>
+  </div>
+
+  <h1>Five in a Row</h1>
+
+  <div id="players" class="players"></div>
+
+  <!-- whose turn it is (stone + text) -->
+  <div id="turn-bar">
+    <div id="turn-stone" class="black"></div>
+    <span id="turn-text">Connecting…</span>
+  </div>
+
+  <!-- game.js fills the board with 361 squares -->
+  <div id="board"></div>
+
+  <!-- messages and errors, in plain words -->
+  <div id="message" role="alert"></div>
+
+  <div class="row center">
+    <button id="restart" class="primary">Restart</button>
+    <button id="leave" class="ghost">Leave</button>
+  </div>
+  <div id="restart-status" class="restart-status"></div>
+
+  <script src="api.js"></script>
+  <script src="session.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

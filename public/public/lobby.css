@@ -1,0 +1,23 @@
+/* lobby.css: lobby page specifics */
+
+#status {
+  color: #f0b95b;
+  font-size: 16px;
+  min-height: 22px;
+  margin: 10px 0;
+}
+
+#start {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.room-code {
+  font-size: 26px;
+  letter-spacing: 4px;
+  color: #f0b95b;
+}
+
+#status.error {
+  color: #f66;
+}

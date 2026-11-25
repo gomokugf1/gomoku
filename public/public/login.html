@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- login.html: log in or create an account. After success you go to matchmaking.html. -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+  <title>GOMOKU</title>
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <main class="card">
+    <div class="logo"><span class="stone black"></span><span class="stone white"></span></div>
+    <h1>Five in a Row</h1>
+
+    <div class="tabs">
+      <button type="button" id="tab-login" class="tab active">Log in</button>
+      <button type="button" id="tab-register" class="tab">Create account</button>
+      <div class="tab-indicator"></div>
+    </div>
+
+    <form id="form" novalidate>
+      <label for="username">Username</label>
+      <input id="username" type="text" autocomplete="username" maxlength="20" autofocus>
+
+      <label for="password">Password</label>
+      <div class="pw">
+        <input id="password" type="password" autocomplete="current-password" maxlength="128">
+        <button type="button" id="toggle" class="ghost">Show</button>
+      </div>
+
+      <div id="confirm-row" hidden>
+        <label for="confirm">Repeat password</label>
+        <input id="confirm" type="password" autocomplete="new-password" maxlength="128">
+      </div>
+
+      <p id="error" role="alert"></p>
+      <button type="submit" id="submit" class="primary">Log in</button>
+    </form>
+
+    <p id="mode-note" class="note">Username: 3-20 letters, numbers or _. Password: at least 8 characters.</p>
+  </main>
+  <script src="api.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+/* matchmaking.css: matchmaking page layout */
+
+#find, #create, #join {
+  font-size: 18px;
+  padding: 8px 20px;
+}
+
+#code {
+  max-width: 200px;
+  text-transform: uppercase;
+}
+
+/* only errors are shown here */
+#note {
+  color: #f66;
+  font-size: 15px;
+  min-height: 20px;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- local.html: two players on ONE computer (no server needed for the game itself). -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+  <title>GOMOKU</title>
+  <link rel="icon" href="assets/icon.png">
+  <!-- style.css makes everything pretty (colors, sizes) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Who is logged in, and the Log out button (filled in by session.js). -->
+  <div id="user-bar">
+    <span>&#128100; <strong id="user-name"></strong></span>
+    <button id="logout">Log out</button>
+  </div>
+
+  <h1>Five in a Row</h1>
+
+  <!-- This line tells us whose turn it is, or who won. -->
+  <div id="turn-bar">
+    <div id="turn-stone" class="black"></div>
+    <span id="turn-text">Black's turn</span>
+  </div>
+  <!-- The game board goes here. game.js fills it with 361 little squares. -->
+  <div id="board"></div>
+
+  <!-- Press this to start over. -->
+  <button id="restart">Restart Game</button>
+
+  <!-- Leave the game back to the matchmaking menu. -->
+  <button id="back" class="ghost">Back to matchmaking</button>
+
+  <!-- local.js is the "brain" of the game. It must come last. -->
+  <script src="api.js"></script>
+  <script src="session.js"></script>
+  <script src="local.js"></script>
+</body>
+</html>
